@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Image Restoration Tool</title>
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header Section -->
+      <header>
+        <h1>
+          <i class="fas fa-wand-magic-sparkles"></i> Smart Image Restoration
+          <i class="fas fa-wand-magic-sparkles"></i>
+        </h1>
+        <p>
+          Upload your photo and let AI remove distractions and enhance quality
+        </p>
+        <div class="generation-history">
+          <button id="history-btn" class="btn-secondary">
+            <i class="fas fa-history"></i> View History
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main>
+        <!-- Privacy Disclaimer -->
+        <div class="privacy-disclaimer">
+          <div class="disclaimer-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <div class="disclaimer-content">
+            <h4>Your Privacy Matters</h4>
+            <p>
+              All your images and restorations are stored
+              <strong>only on your device</strong> using browser localStorage.
+              We never store your uploads or restored images on our servers.
+            </p>
+            <p>
+              Images are temporarily processed by Google Gemini AI. They're
+              briefly stored on our servers during processing and cached (up to
+              1 hour) for browser viewing, then automatically deleted. Permanent
+              storage occurs only in your browser's localStorage.
+            </p>
+          </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section">
+          <div class="upload-container" id="upload-container">
+            <div class="upload-content" id="upload-content">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p>Drag & drop your photo or click to browse</p>
+              <span class="file-info">JPG, JPEG or PNG (max 10MB)</span>
+            </div>
+            <input
+              type="file"
+              id="file-input"
+              accept=".jpg,.jpeg,.png"
+              hidden
+            />
+          </div>
+
+          <div
+            class="preview-container"
+            id="preview-container"
+            style="display: none"
+          >
+            <div class="preview-header">
+              <h3>Your Photo</h3>
+              <button id="change-photo" class="btn-secondary">
+                <i class="fas fa-sync-alt"></i> Change
+              </button>
+            </div>
+            <div class="image-preview">
+              <img id="preview-image" src="" alt="Preview" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Restoration Options Section -->
+        <div class="restoration-section">
+          <h3>Choose Restoration Type</h3>
+
+          <div class="restoration-modes">
+            <h4>Restoration Modes</h4>
+            <div class="restoration-buttons">
+              <button class="restoration-btn" data-mode="remove_distractions">
+                <i class="fas fa-broom"></i>
+                Remove Distractions
+                <span class="mode-desc"
+                  >Cleans up distracting elements and text overlays</span
+                >
+              </button>
+              <button class="restoration-btn" data-mode="fix_artifacts">
+                <i class="fas fa-paint-brush"></i>
+                Fix Visual Artifacts
+                <span class="mode-desc"
+                  >Removes graphical elements and fixes visual noise</span
+                >
+              </button>
+              <button class="restoration-btn" data-mode="enhance_clarity">
+                <i class="fas fa-tint"></i>
+                Enhance Clarity
+                <span class="mode-desc"
+                  >Improves image clarity by removing visual noise</span
+                >
+              </button>
+              <button class="restoration-btn" data-mode="deep_restoration">
+                <i class="fas fa-magic"></i>
+                Deep Restoration
+                <span class="mode-desc"
+                  >Complete restoration removing all non-original elements</span
+                >
+              </button>
+            </div>
+          </div>
+
+          <div class="submit-section">
+            <button id="restore-btn" class="btn-primary" disabled>
+              <i class="fas fa-wand-magic-sparkles"></i> Restore Image
+            </button>
+            <p class="info-text">This may take 15-30 seconds to process.</p>
+          </div>
+        </div>
+
+        <!-- Result Section -->
+        <div class="result-section" id="result-section" style="display: none">
+          <h3>Restoration Complete!</h3>
+          <div class="comparison-container">
+            <div class="original-image">
+              <h4>Original</h4>
+              <img id="original-image" src="" alt="Original" />
+            </div>
+            <div class="result-image-container">
+              <h4>Restored</h4>
+              <img id="result-image" src="" alt="Result" />
+              <div class="loader" id="loader">
+                <div class="spinner"></div>
+                <p>Restoring your image...</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button id="download-btn" class="btn-primary">
+              <i class="fas fa-download"></i> Download Restored Image
+            </button>
+            <button id="start-over-btn" class="btn-secondary">
+              <i class="fas fa-redo"></i> Restore Another
+            </button>
+          </div>
+        </div>
+
+        <!-- History Modal -->
+        <div id="history-modal" class="modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Your Previous Restorations</h3>
+              <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+              <div id="restoration-grid" class="restoration-grid">
+                <!-- History items will be added here dynamically -->
+                <p class="empty-history-message">
+                  You haven't restored any images yet.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer>
+        <p>Made with <i class="fas fa-heart"></i> by Smart Image Restoration</p>
+        <p class="disclaimer">
+          For personal use only. Respect copyright and intellectual property
+          rights.
+        </p>
+      </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+  </body>
+</html>
