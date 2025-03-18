@@ -3,6 +3,11 @@
 
 A web-based tool that uses Google's Generative AI (Gemini) to restore and enhance images by removing distractions, fixing artifacts, and improving overall clarity.
 
+![image](https://github.com/user-attachments/assets/4c6ffb97-8ab8-4707-aa56-7dd1af37c311)
+
+![image](https://github.com/user-attachments/assets/6fc8fbe4-533d-43c5-b38a-a9810513c354)
+
+
 ## Features
 
 - **Multiple Restoration Modes:**
